@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>7. Components 101</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+
+    <tasks>
+        <task>Go to the store</task>
+        <task>Go to the bank</task>
+        <task>Go to work</task>
+    </tasks>
+
+</div>
+
+<script>
+
+    Vue.component('tasks', {
+        template: '<ul></ul>'
+    });
+    Vue.component('task', {
+        template: '<li><slot></slot></li>'
+    });
+
+    new Vue({
+        el: '#root',
+        data: {
+
+        }
+    })
+</script>
+
+</body>
+</html>
