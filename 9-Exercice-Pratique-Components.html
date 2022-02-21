@@ -11,13 +11,29 @@
 <div id="root" class="container">
 
     <message title="Hello World" body="Lorem ipsum dolor sit amet."></message>
-
     <message title="Hello Universe" body="Bla bla bla."></message>
 
     <modal v-show="showModal" @close="showModal = false">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras at ex sed nulla blandit rutrum non vitae justo. Fusce quis pharetra est. Maecenas facilisis tellus quis justo congue rhoncus. Donec suscipit nibh orci, ut semper erat facilisis non. Ut dapibus est efficitur, porttitor neque in, fringilla mi. Sed dictum metus odio, vel gravida justo egestas sit amet. In a iaculis purus, sed luctus leo. Praesent in cursus ipsum. Fusce dolor massa, pellentesque a lacus sit amet, faucibus bibendum arcu. Morbi commodo, ex vitae varius aliquam, enim mauris tristique mi, rutrum vulputate massa tellus quis metus. Nunc eleifend iaculis augue non convallis. Phasellus mollis mauris sit amet ex iaculis, non aliquet velit vestibulum. Nullam sem dolor, faucibus nec imperdiet a, molestie a sem. Praesent varius volutpat lacus. Donec commodo velit at dui varius, sed commodo libero dapibus.
     </modal>
     <button class="button" type="button" @click="showModal = true">Show Modal</button>
+
+    <br>
+    <br>
+    <hr>
+    <tabs>
+        <tab name="About Us" :selected="true">
+            <h2>Here is the content for the about us tab.</h2>
+        </tab>
+
+        <tab name="About Our Cultre">
+            <h2>Here is the content for the about our culture tab.</h2>
+        </tab>
+
+        <tab name="About Our Vision">
+            <h2>Here is the content for the about our vision tab.</h2>
+        </tab>
+    </tabs>
 
 </div>
 
@@ -47,6 +63,61 @@
             '        </div>\n' +
             '        <button class="modal-close is-large" aria-label="close" @click="$emit(\'close\')"></button>\n' +
             '    </div>'
+    });
+
+    Vue.component('tabs', {
+        template: '<div><div class="tabs">\n' +
+            '        <ul>' +
+                        '<li v-for="tab in tabs" :class="{ \'is-active\': tab.isActive }">' +
+                        '   <a :href="tab.href" @click="selectTab(tab)">{{ tab.name }}</a>' +
+                        '</li>'+
+            '        </ul>' +
+            '    </div>' +
+                '<div class="tabs-details">' +
+                '   <slot></slot>' +
+                '</div></div>',
+
+        data() {
+            return {tabs: []}
+        },
+
+        created(){
+            this.tabs = this.$children;
+        },
+
+        methods: {
+            selectTab(selectedTab) {
+                this.tabs.forEach(tab => {
+                    tab.isActive = (tab.name === selectedTab.name);
+                })
+            }
+        }
+    });
+
+    Vue.component('tab',{
+        template: '' +
+            '<div v-show="isActive"><slot></slot></div>',
+
+        props: {
+            name:{required: true},
+            selected: {default: false},
+        },
+
+        data() {
+            return {
+                isActive: false,
+            };
+        },
+
+        computed: {
+            href(){
+                return '#' + this.name.toLowerCase().replace(/ /g, '-');
+            }
+        },
+
+        mounted() {
+            this.isActive = this.selected;
+        }
     })
 
     new Vue({
@@ -54,7 +125,7 @@
         data: {
             showModal: false,
         }
-    })
+    });
 </script>
 
 </body>
