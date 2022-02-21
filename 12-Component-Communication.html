@@ -7,17 +7,19 @@
 </head>
 <body>
 <div id="root">
-    <coupon v-on:applied="onCouponApplied"></coupon>
+    <coupon></coupon>
 </div>
 
 
 <script>
 
+    window.Event = new Vue();
+
     Vue.component('coupon', {
         template: '<input type="text" placeholder="Enter your coupon code" @blur="onCouponApplied">',
         methods: {
             onCouponApplied(){
-                this.$emit('applied');
+                Event.$emit('applied');
             }
         }
     });
@@ -27,10 +29,8 @@
         data: {
 
         },
-        methods: {
-            onCouponApplied(){
-                alert('It was applied!')
-            }
+        created() {
+            Event.$on('applied', ()=> alert('Handling it'))
         }
     });
 </script>
