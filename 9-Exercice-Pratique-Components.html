@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>9. Exercice pratique Components</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css" integrity="sha512-IgmDkwzs96t4SrChW29No3NXBIBv8baW490zk5aXvhCD8vuZM3yUSkbyTBcXohkySecyzIrUwiF/qV0cuPcL3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style> body{ padding-top: 40px } </style>
+</head>
+<body>
+<div id="root" class="container">
+
+    <message title="Hello World" body="Lorem ipsum dolor sit amet."></message>
+
+    <message title="Hello Universe" body="Bla bla bla."></message>
+
+</div>
+
+<script>
+
+    Vue.component('message', {
+
+        props: ['title', 'body'],
+
+        data(){
+            return {isVisible: true}
+        },
+
+        template: '<article class="message" v-show="isVisible">' +
+            '<div class="message-header"><p>{{ title }}</p><button type="button" @click="isVisible = false" class="delete" aria-label="delete">x</button></div>' +
+            '<div class="message-body">{{ body }}</div>' +
+            '</article>',
+    });
+
+    new Vue({
+        el: '#root',
+        data: {
+
+        }
+    })
+</script>
+
+</body>
+</html>
