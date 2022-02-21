@@ -9,21 +9,30 @@
 
 <div id="root">
 
-    <tasks>
-        <task>Go to the store</task>
-        <task>Go to the bank</task>
-        <task>Go to work</task>
-    </tasks>
+
+    <task-list></task-list>
 
 </div>
 
 <script>
 
-    Vue.component('tasks', {
-        template: '<ul></ul>'
-    });
     Vue.component('task', {
         template: '<li><slot></slot></li>'
+    });
+
+    Vue.component('task-list', {
+        template: '<ul><task v-for="task in tasks">{{ task.description}}</task></ul>',
+
+        data(){
+            return {
+                tasks: [
+                    {description: 'Go to the store', complete: true},
+                    {description: 'Go to the mail', complete: false},
+                    {description: 'Go to the farm', complete: true},
+                    {description: 'Go to work', complete: false},
+                ],
+            }
+        }
     });
 
     new Vue({
